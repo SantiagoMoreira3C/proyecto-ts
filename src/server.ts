@@ -11,6 +11,8 @@ import clienteRoutes from './routes/Cliente';
 import platoRoutes from './routes/Plato';
 import pedidoRoutes from './routes/Pedido';
 import cors from 'cors';
+import path from 'path';
+
 
 //Importaciones para documentar en swagger
 import swaggerJSDoc from 'swagger-jsdoc';
@@ -80,6 +82,9 @@ const StartServer = () => {
             message: error.message
         });
     });
+    // Sirve archivos estáticos desde la carpeta 'public'
+    const publicDir = path.join(__dirname, 'public');
+    router.use('/public', express.static(publicDir));
 
     http.createServer(router).listen(config.server.port, () => Logging.info(`Servidor iniciado en el puerto ${config.server.port}`));
 };
